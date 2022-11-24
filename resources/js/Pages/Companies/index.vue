@@ -32,7 +32,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(company, index) in companies.data" :key="index">
+                <tr
+                  class="company-row"
+                  @click="visitCompany(company)"
+                  v-for="(company, index) in companies.data"
+                  :key="index"
+                >
                   <td>{{ company.id }}</td>
                   <td>{{ company.name }}</td>
                   <td>{{ company.email }}</td>
@@ -42,15 +47,13 @@
                     <a
                       class="btn btn-xs btn-primary ml-1 mr-1"
                       v-if="global.auth.user"
-                      :href="
-                        route('companies.edit', { company_id: company.id })
-                      "
+                      @click.stop="editCompany(company)"
                       >Edit</a
                     >
                     <a
                       class="btn btn-xs btn-danger"
                       v-if="global.auth.user"
-                      @click="deleteCompany(company)"
+                      @click.stop="deleteCompany(company)"
                       >Delete</a
                     >
                   </td>
@@ -94,21 +97,32 @@ function deleteCompany(company) {
       Inertia.delete(route("companies.destroy", { company_id: company.id }), {
         onSuccess: (page) => {
           // show success toast
-          toast.success('Success!', 'Company successfully deleted.')
+          toast.success("Success!", "Company successfully deleted.");
 
-          // reload companies 
+          // reload companies
           Inertia.reload({
-            only: ['companies']
-          })
+            only: ["companies"],
+          });
         },
         onError: (error) => {
           alert(error);
-        }
+        },
       });
     }
   );
 }
+
+function editCompany(company) {
+  Inertia.get(route("companies.edit", { company_id: company.id }));
+}
+
+function visitCompany(company) {
+  Inertia.get(route("companies.show", { company_id: company.id }));
+}
 </script>
 
 <style>
+.company-row {
+  cursor: pointer;
+}
 </style>

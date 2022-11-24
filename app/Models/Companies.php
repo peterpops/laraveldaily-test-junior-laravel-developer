@@ -22,6 +22,12 @@ class Companies extends Model
     ];
 
 
+    public function employees()
+    {
+        return $this->hasMany(Employees::class, 'company_id', 'id');
+    }
+
+
     protected function getLogoUrlAttribute(): string
     {
         return asset('storage/logos/' . $this->logo);

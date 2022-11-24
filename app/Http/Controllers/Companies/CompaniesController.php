@@ -73,8 +73,18 @@ class CompaniesController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Inertia\Inertia
      */
-    public function show()
+    public function show($company_id)
     {
+        return Inertia::render(
+            'Companies/show',
+            [
+                // in first render, then on request only
+                'company' => (function () use ($company_id) {
+                    // get company
+                    return Companies::with('employees')->findOrFail($company_id);
+                }),
+            ]
+        );
     }
 
     /**

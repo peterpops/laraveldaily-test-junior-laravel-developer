@@ -32,7 +32,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(employee, index) in employees.data" :key="index">
+                <tr
+                  class="employee-row"
+                  @click="visitEmployee(employee)"
+                  v-for="(employee, index) in employees.data" 
+                  :key="index">
                   <td>{{ employee.id }}</td>
                   <td>{{ employee.first_name }} {{ employee.last_name }}</td>
                   <td>{{ employee.email }}</td>
@@ -41,9 +45,7 @@
                     <a
                       class="btn btn-xs btn-primary mr-1"
                       v-if="global.auth && global.auth.user"
-                      :href="
-                        route('employees.edit', { employee_id: employee.id })
-                      "
+                      @click.stop="editEmployee(employee)"
                       >Edit</a
                     >
                     <a
@@ -110,7 +112,18 @@ function deleteEmployee(employee) {
     }
   );
 }
+
+function editEmployee(employee) {
+  Inertia.get(route('employees.edit', {employee_id: employee.id}));
+}
+
+function visitEmployee(employee) {
+  Inertia.get(route('employees.show', {employee_id: employee.id}));
+}
 </script>
 
 <style>
+.employee-row {
+  cursor: pointer;
+}
 </style>

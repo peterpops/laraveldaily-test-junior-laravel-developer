@@ -7,7 +7,6 @@ use App\Http\Requests\Employees\storeRequest;
 use App\Http\Requests\Employees\updateRequest;
 use App\Models\Companies;
 use App\Models\Employees;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class EmployeesController extends Controller
@@ -38,7 +37,7 @@ class EmployeesController extends Controller
         return Inertia::render(
             'Employees/create',
             [
-                'companies' => function() {
+                'companies' => function () {
                     return Companies::all('id', 'name');
                 }
             ]
@@ -72,9 +71,16 @@ class EmployeesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($employee_id)
     {
-        //
+        return Inertia::render(
+            'Employees/show',
+            [
+                'employee' => function () use ($employee_id) {
+                    return $result = Employees::with('company')->findOrFail($employee_id);
+                },
+            ]
+        );
     }
 
     /**
@@ -90,7 +96,7 @@ class EmployeesController extends Controller
             'Employees/edit',
             [
                 'companies' => function () use ($employee_id) {
-                    return Companies::all('id', 'name');
+                    return Companies::orderBy('name')->get(['id', 'name']);
                 },
                 'employee' => function () use ($employee_id) {
                     return Employees::findOrFail($employee_id);
