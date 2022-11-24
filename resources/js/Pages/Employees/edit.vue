@@ -1,4 +1,5 @@
 <template>
+  <HeaderTitle title="Edit employee" />
   <section class="content">
     <div class="row mb-2">
       <div class="col-sm-6"></div>

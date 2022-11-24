@@ -9,6 +9,7 @@ import { Head, Link, useForm } from "@inertiajs/inertia-vue3";
 defineProps({
   canResetPassword: Boolean,
   status: String,
+  errors: Object,
 });
 
 const form = useForm({
@@ -33,36 +34,43 @@ const submit = () => {
         <!-- name -->
         <div class="form-group row">
           <InputLabel for="email" value="Email" />
-          <TextInput
-            id="email"
-            type="email"
-            class="mt-1 block w-full"
-            v-model="form.email"
-            required
-            autofocus
-            autocomplete="username"
-          />
-          <InputError class="mt-2" :message="form.errors.email" />
+          <div class="col-8">
+            <TextInput
+              id="email"
+              type="email"
+              class="form-control"
+              :class="{
+                'is-invalid': errors && errors.email,
+              }"
+              v-model="form.email"
+              required
+              autofocus
+              autocomplete="username"
+            />
+            <InputError class="mt-2" :message="errors.email" />
+          </div>
         </div>
         <!-- email -->
         <div class="form-group row">
           <InputLabel for="password" value="Password" />
-          <TextInput
-            id="password"
-            type="password"
-            class="mt-1 block w-full"
-            v-model="form.password"
-            required
-            autocomplete="current-password"
-          />
-          <InputError class="mt-2" :message="form.errors.password" />
+          <div class="col-8">
+            <TextInput
+              id="password"
+              type="password"
+              class="form-control"
+              v-model="form.password"
+              required
+              autocomplete="current-password"
+            />
+            <InputError class="mt-2" :message="errors.password" />
+          </div>
         </div>
 
-        <div class="block mt-4">
-          <label class="flex items-center">
+        <div class="form-group row">
+          <InputLabel for="remember" value="Remember me" />
+          <div class="col-8">
             <Checkbox name="remember" v-model:checked="form.remember" />
-            <span class="ml-2 text-sm text-gray-600">Remember me</span>
-          </label>
+          </div>
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -73,7 +81,7 @@ const submit = () => {
           >
             Forgot your password?
           </Link>
-          <button type="submit">Log in</button>
+          <button type="submit" class="btn btn-primary">Log in</button>
         </div>
       </form>
     </div>
