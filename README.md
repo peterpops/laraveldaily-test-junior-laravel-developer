@@ -26,11 +26,3 @@ https://laraveldaily.com/test-junior-laravel-developer-sample-project/
 
 ## Custom
 - √ Using vue3 to build SPA-frontend
-
-## Preview
-
-<p align="center">
-    <img src="public/ss/ss1.png" alt="ss1">
-    <img src="public/ss/ss2.png" alt="ss2">
-    <img src="public/ss/ss3.png" alt="ss3">
-</p>
