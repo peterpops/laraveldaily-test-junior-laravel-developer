@@ -26,17 +26,17 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.name'],
+                'is-invalid': errors && errors['name'],
               }"
               id="name"
-              placeholder="First name"
+              placeholder="Company name"
               v-model="addForm.name"
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.name']"
+              v-if="errors && errors['name']"
             >
-              {{ errors["addForm.name"] }}
+              {{ errors["name"] }}
             </span>
           </div>
         </div>
@@ -51,7 +51,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.email'],
+                'is-invalid': errors && errors['email'],
               }"
               id="name"
               placeholder="Email"
@@ -59,9 +59,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.email']"
+              v-if="errors && errors['email']"
             >
-              {{ errors["addForm.email"] }}
+              {{ errors["email"] }}
             </span>
           </div>
         </div>
@@ -76,7 +76,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.website'],
+                'is-invalid': errors && errors['website'],
               }"
               id="name"
               placeholder="Website"
@@ -84,9 +84,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.website']"
+              v-if="errors && errors['website']"
             >
-              {{ errors["addForm.website"] }}
+              {{ errors["website"] }}
             </span>
           </div>
         </div>
@@ -100,7 +100,7 @@
               ref="logo"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.logo'],
+                'is-invalid': errors && errors['logo'],
               }"
               id="logo"
               placeholder="Logo"
@@ -108,9 +108,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.logo']"
+              v-if="errors && errors['logo']"
             >
-              {{ errors["addForm.logo"] }}
+              {{ errors["logo"] }}
             </span>
           </div>
         </div>
@@ -148,17 +148,12 @@ let handleLogoUpload = () => {
 let store = () => {
   Inertia.post(
     route("companies.store"),
-    {
-      addForm: addForm,
-    },
+    addForm,
     {
       preserveScroll: true,
       onSuccess: (page) => {
         // toast
         toast.success("Success", "Company has been created.");
-
-        // redirect to list
-        Inertia.get(route("companies.index"));
       },
       onError: (errors) => {
         toast.error("Error", "The from contains some errors.");

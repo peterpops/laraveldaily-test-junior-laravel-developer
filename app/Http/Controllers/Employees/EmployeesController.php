@@ -53,9 +53,7 @@ class EmployeesController extends Controller
     public function store(storeRequest $storeRequest)
     {
         $validated = $storeRequest->validated();
-        $validated = $validated['addForm'];
 
-        // create employee
         Employees::create([
             'first_name' => $validated['firstName'],
             'last_name' => $validated['lastName'],
@@ -63,6 +61,8 @@ class EmployeesController extends Controller
             'phone' => $validated['phone'],
             'company_id' => $validated['company'],
         ]);
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -126,6 +126,8 @@ class EmployeesController extends Controller
             'phone' => $validated['phone'],
             'company_id' => $validated['company'],
         ]);
+
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -139,5 +141,7 @@ class EmployeesController extends Controller
         $employee = Employees::findOrFail($employee_id);
 
         $employee->delete();
+
+        redirect()->route('employees.index');
     }
 }

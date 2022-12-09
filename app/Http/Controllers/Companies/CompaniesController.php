@@ -20,7 +20,6 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        // return inertia
         return Inertia::render('Companies/index', [
             'companies' => function () {
                 return Companies::latest()->paginate(10);
@@ -35,7 +34,6 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        // return inertia
         return Inertia::render(
             'Companies/create',
             []
@@ -50,21 +48,19 @@ class CompaniesController extends Controller
      */
     public function store(storeRequest $storeRequest)
     {
-        // validated inputs
         $validated = $storeRequest->validated();
-        $validated = $validated['addForm'];
 
-        // store logo
-        if ($storeRequest->hasFile('addForm.logo')) {
-            $logoFile = $storeRequest->file('addForm.logo');
+        if ($storeRequest->hasFile('logo')) {
+            $logoFile = $storeRequest->file('logo');
 
             $validated['logo'] = $this->saveLogo($logoFile);
         } else {
             unset($validated['logo']);
         }
 
-        // create new company
         Companies::create($validated);
+
+        return redirect()->route('companies.index');
     }
 
     /**
@@ -80,7 +76,6 @@ class CompaniesController extends Controller
             [
                 // in first render, then on request only
                 'company' => (function () use ($company_id) {
-                    // get company
                     return Companies::with('employees')->findOrFail($company_id);
                 }),
             ]
@@ -100,7 +95,6 @@ class CompaniesController extends Controller
             [
                 // in first render, then on request only
                 'company' => (function () use ($company_id) {
-                    // get company
                     return Companies::findOrFail($company_id);
                 }),
             ]
@@ -135,7 +129,6 @@ class CompaniesController extends Controller
             unset($validated['logo']);
         }
 
-        // update
         $company->update($validated);
     }
 
@@ -150,6 +143,8 @@ class CompaniesController extends Controller
         $company = Companies::findOrFail($company_id);
 
         $company->delete();
+
+        redirect()->route('companies.index');
     }
 
 

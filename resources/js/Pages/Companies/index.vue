@@ -44,12 +44,13 @@
                   <td>{{ company.website }}</td>
                   <td>
                     <img :src="company.logo_url" v-if="company.logo" />
-                    <a
+                    <Link
                       class="btn btn-xs btn-primary ml-1 mr-1"
                       v-if="global.auth.user"
-                      @click.stop="editCompany(company)"
-                      >Edit</a
-                    >
+                      @click.stop
+                      :href="route('companies.edit', { company_id: company.id })"
+                      text="Edit"
+                      />
                     <a
                       class="btn btn-xs btn-danger"
                       v-if="global.auth.user"
@@ -98,11 +99,6 @@ function deleteCompany(company) {
         onSuccess: (page) => {
           // show success toast
           toast.success("Success!", "Company successfully deleted.");
-
-          // reload companies
-          Inertia.reload({
-            only: ["companies"],
-          });
         },
         onError: (error) => {
           alert(error);
@@ -110,10 +106,6 @@ function deleteCompany(company) {
       });
     }
   );
-}
-
-function editCompany(company) {
-  Inertia.get(route("companies.edit", { company_id: company.id }));
 }
 
 function visitCompany(company) {

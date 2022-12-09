@@ -25,19 +25,19 @@ class storeRequest extends FormRequest
     public function rules()
     {
         return [
-            'addForm.name' => [
+            'name' => [
                 ['required'],
                 ['string']
             ],
-            'addForm.email' => [
+            'email' => [
                 ['required'],
                 ['email', ['rfc','dns']],
             ], 
-            'addForm.website' => [
+            'website' => [
                 ['required'],
                 ['url'],
             ],
-            'addForm.logo' => [
+            'logo' => [
                 ['nullable'],
                 ['image'],
             ],
@@ -48,10 +48,10 @@ class storeRequest extends FormRequest
     public function messages()
     {
         return [
-            'addForm.name.required' => 'Firstname is required',
-            'addForm.name.string' => 'Must be a string',
-            'addForm.email.required' => 'Email is required',
-            'addForm.email.email' => 'Invalid email adress',
+            'name.required' => 'Firstname is required',
+            'name.string' => 'Must be a string',
+            'email.required' => 'Email is required',
+            'email.email' => 'Invalid email adress',
         ];
     }
 }

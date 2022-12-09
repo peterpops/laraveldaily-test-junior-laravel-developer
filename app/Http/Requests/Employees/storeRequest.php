@@ -24,20 +24,20 @@ class storeRequest extends FormRequest
     public function rules()
     {
         return [
-            'addForm.firstName' => [
+            'firstName' => [
                 ['required'],
             ],
-            'addForm.lastName' => [
+            'lastName' => [
                 ['required'],
             ],
-            'addForm.email' => [
+            'email' => [
                 ['required'],
                 ['email', ['rfc','dns']],
             ],
-            'addForm.phone' => [
+            'phone' => [
                 ['required'],
             ], 
-            'addForm.company' => [
+            'company' => [
                 ['required'],
                 ['integer'],
             ],
@@ -47,11 +47,11 @@ class storeRequest extends FormRequest
     public function messages()
     {
         return [
-            'addForm.firstName.required' => 'Firstname is required',
-            'addForm.lastName.required' => 'Lastname is required',
-            'addForm.email.required' => 'An email is required',
-            'addForm.email.email' => 'Must be a valid email address',
-            'addForm.phone.required' => 'A phonenumber is required',
+            'firstName.required' => 'Firstname is required',
+            'lastName.required' => 'Lastname is required',
+            'email.required' => 'An email is required',
+            'email.email' => 'Must be a valid email address',
+            'phone.required' => 'A phonenumber is required',
         ];
     }
 }

@@ -30,6 +30,6 @@ class Companies extends Model
 
     protected function getLogoUrlAttribute(): string
     {
-        return asset('storage/logos/' . $this->logo);
+        return (!empty($this->logo)) ? asset('storage/logos/' . $this->logo) : '';
     }
 }

@@ -3,7 +3,9 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-6"></div>
+        <div class="col-sm-6">
+          <Link class="btn btn-primary" :href="route('employees.edit', {employee_id: employee.id})" text="Edit" />
+        </div>
 
         <div class="col-sm-6">
           <div class="float-right">
@@ -41,9 +43,12 @@
             <div class="card-body">
               <strong>Company name</strong>
               <p class="text-muted">
-                <a href="#" @click="visitCompany(employee.company)">{{
-                  employee.company.name
-                }}</a>
+                <Link
+                  :href="
+                    route('companies.show', { company_id: employee.company.id })
+                  "
+                  :text="employee.company.name"
+                ></Link>
               </p>
             </div>
           </div>
@@ -54,18 +59,10 @@
 </template>
 
 <script setup>
-import { defineProps, useAttrs } from "vue";
-import { Inertia } from "@inertiajs/inertia";
-
 // props
 const props = defineProps({
   employee: Object,
 });
-
-// methods
-function visitCompany(company) {
-  Inertia.get(route("companies.show", { company_id: company.id }));
-}
 </script>
 
 <style>

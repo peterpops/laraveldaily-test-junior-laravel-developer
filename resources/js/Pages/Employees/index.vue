@@ -42,16 +42,15 @@
                   <td>{{ employee.email }}</td>
                   <td>{{ employee.phone }}</td>
                   <td>
-                    <a
-                      class="btn btn-xs btn-primary mr-1"
-                      v-if="global.auth && global.auth.user"
-                      @click.stop="editEmployee(employee)"
-                      >Edit</a
-                    >
+                    <Link
+                    @click.stop
+                    class="btn btn-xs btn-primary mr-1"
+                    :href="route('employees.edit', {employee_id: employee.id})"
+                    text="Edit"/>
                     <a
                       class="btn btn-xs btn-danger"
                       v-if="global.auth && global.auth.user"
-                      @click="deleteEmployee(employee)"
+                      @click.stop="deleteEmployee(employee)"
                       >Delete</a
                     >
                   </td>
@@ -99,11 +98,6 @@ function deleteEmployee(employee) {
         onSuccess: (page) => {
           // show success toast
           toast.success("Success!", "Employee successfully deleted.");
-
-          // reload companies
-          Inertia.reload({
-            only: ["employees"],
-          });
         },
         onError: (error) => {
           alert(error);
@@ -111,10 +105,6 @@ function deleteEmployee(employee) {
       });
     }
   );
-}
-
-function editEmployee(employee) {
-  Inertia.get(route('employees.edit', {employee_id: employee.id}));
 }
 
 function visitEmployee(employee) {

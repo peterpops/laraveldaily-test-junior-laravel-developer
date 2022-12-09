@@ -181,9 +181,6 @@ let update = () => {
       onSuccess: (page) => {
         // success toast
         toast.success("Employee updated!", 'Employee info updated.');
-
-        // redirect to list
-        Inertia.get(route("employees.index"));
       },
       onError: (error) => {
         // error toast

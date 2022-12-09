@@ -28,7 +28,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.firstName'],
+                'is-invalid': errors && errors['firstName'],
               }"
               id="name"
               placeholder="Firstname"
@@ -36,9 +36,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.firstName']"
+              v-if="errors && errors['firstName']"
             >
-              {{ errors["addForm.firstName"] }}
+              {{ errors["firstName"] }}
             </span>
           </div>
         </div>
@@ -53,7 +53,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.lastName'],
+                'is-invalid': errors && errors['lastName'],
               }"
               id="name"
               placeholder="Lastname"
@@ -61,9 +61,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.lastName']"
+              v-if="errors && errors['lastName']"
             >
-              {{ errors["addForm.lastName"] }}
+              {{ errors["lastName"] }}
             </span>
           </div>
         </div>
@@ -78,7 +78,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.email'],
+                'is-invalid': errors && errors['email'],
               }"
               id="name"
               placeholder="Email"
@@ -86,9 +86,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.email']"
+              v-if="errors && errors['email']"
             >
-              {{ errors["addForm.email"] }}
+              {{ errors["email"] }}
             </span>
           </div>
         </div>
@@ -103,7 +103,7 @@
               type="text"
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.phone'],
+                'is-invalid': errors && errors['phone'],
               }"
               id="name"
               placeholder="Phone"
@@ -111,9 +111,9 @@
             />
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.phone']"
+              v-if="errors && errors['phone']"
             >
-              {{ errors["addForm.phone"] }}
+              {{ errors["phone"] }}
             </span>
           </div>
         </div>
@@ -124,17 +124,23 @@
             <select
               class="form-control"
               :class="{
-                'is-invalid': errors && errors['addForm.company'],
+                'is-invalid': errors && errors['company'],
               }"
               v-model="addForm.company"
             >
-              <option v-for="(option, index) in companies" :key="index" :value="option.id">{{option.name}}</option>
+              <option
+                v-for="(option, index) in companies"
+                :key="index"
+                :value="option.id"
+              >
+                {{ option.name }}
+              </option>
             </select>
             <span
               class="error invalid-feedback"
-              v-if="errors && errors['addForm.company']"
+              v-if="errors && errors['company']"
             >
-              {{ errors["addForm.company"] }}
+              {{ errors["company"] }}
             </span>
           </div>
         </div>
@@ -169,17 +175,13 @@ let addForm = {
 let store = () => {
   Inertia.post(
     route("employees.store"),
-    {
-      addForm: addForm,
-    },
+    addForm,
+
     {
       preserveScroll: true,
       onSuccess: (page) => {
         // toast
         toast.success("Success", "Employee has been created.");
-
-        // redirect to list
-        Inertia.get(route("employees.index"));
       },
       onError: (errors) => {
         toast.error("Error", "The from contains some errors.");
